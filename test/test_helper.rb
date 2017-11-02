@@ -147,4 +147,5 @@ class PurchaseOrder < ActiveRecord::Base
   attribute :name, :string
   attribute :price, :float
   attribute :approved_at, :datetime
+  attribute :approved_date, :date
 end

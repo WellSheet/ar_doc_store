@@ -18,6 +18,7 @@ module ArDocStore
     autoload :EmbedsOneAttribute, "ar_doc_store/attribute_types/embeds_one_attribute"
     autoload :EmbedsManyAttribute, "ar_doc_store/attribute_types/embeds_many_attribute"
     autoload :DatetimeAttribute, "ar_doc_store/attribute_types/datetime_attribute"
+    autoload :DateAttribute, "ar_doc_store/attribute_types/date_attribute"
   end
 
   @mappings = Hash.new
