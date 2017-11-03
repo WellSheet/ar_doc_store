@@ -14,6 +14,13 @@ class EncryptedStringAttributeTest < MiniTest::Test
     assert b.code_changed?
   end
 
+  def test_attribute_nil_on_existing_model
+    b = Building.new
+    b.code = nil
+    assert_equal nil, b.code
+  end
+
+
   def test_question_mark_method
     b = Building.new code: 'test'
     assert_equal true, b.code?

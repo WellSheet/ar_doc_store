@@ -25,11 +25,7 @@ module ArDocStore
           store_accessor json_column, key
           define_method key, -> {
             value = read_store_attribute(json_column, key)
-            if value
-              Encryptor.decrypt(value, key: EncryptedStringAttribute.encryption_key , iv: EncryptedStringAttribute.encryption_iv) if value
-            else
-              nil
-            end
+            Encryptor.decrypt(value, key: EncryptedStringAttribute.encryption_key , iv: EncryptedStringAttribute.encryption_iv) if value
           }
           define_method "#{key}=".to_sym, -> (value) {
             value = Encryptor.encrypt(value.to_s,  key: EncryptedStringAttribute.encryption_key, iv: EncryptedStringAttribute.encryption_iv) if value
