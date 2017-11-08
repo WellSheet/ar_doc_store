@@ -3,9 +3,12 @@ gem 'minitest'
 
 require 'minitest/autorun'
 require 'active_record'
-
+require 'pry'
 require_relative './../lib/ar_doc_store'
 ActiveRecord::Base.establish_connection(adapter: 'postgresql', database: 'ar_doc_store_test', username: 'postgres', password: 'postgres')
+
+ENV['AR_DOC_STORE_ENCRYPTION_KEY'] ||= 'This is a key that is 256 bits!!'
+ENV['AR_DOC_STORE_ENCRYPTION_IV'] ||= 'This is a iv'
 
 # A building has many entrances and restrooms and some fields of its own
 # An entrance has a door, a route, and some fields of its own
@@ -138,6 +141,7 @@ class Building < ActiveRecord::Base
   json_attribute :multiconstruction, as: :enumeration, values: %w{concrete wood brick plaster steel}, multiple: true
   json_attribute :strict_enumeration, as: :enumeration, values: %w{happy sad glad bad}, strict: true
   json_attribute :strict_multi_enumeration, as: :enumeration, values: %w{happy sad glad bad}, multiple: true, strict: true
+  json_attribute :code, as: :encrypted_string
   embeds_many :entrances
   embeds_many :restrooms
 end
