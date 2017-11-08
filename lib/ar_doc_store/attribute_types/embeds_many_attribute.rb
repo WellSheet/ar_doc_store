@@ -57,7 +57,7 @@ module ArDocStore
               item
             }
           else
-            items = []
+            items = ArDocStore::EmbeddedCollection.new
           end
           items.parent = self
           instance_variable_set "@#{assn_name}", write_store_attribute(json_column, assn_name, items)
