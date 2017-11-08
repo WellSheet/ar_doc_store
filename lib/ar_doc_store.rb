@@ -19,6 +19,7 @@ module ArDocStore
     autoload :EmbedsManyAttribute, "ar_doc_store/attribute_types/embeds_many_attribute"
     autoload :DatetimeAttribute, "ar_doc_store/attribute_types/datetime_attribute"
     autoload :DateAttribute, "ar_doc_store/attribute_types/date_attribute"
+    autoload :EncryptedStringAttribute, "ar_doc_store/attribute_types/encrypted_string_attribute"
   end
 
   @mappings = Hash.new
@@ -30,6 +31,7 @@ module ArDocStore
   @mappings[:string]      = 'ArDocStore::AttributeTypes::StringAttribute'
   @mappings[:uuid]        = 'ArDocStore::AttributeTypes::UuidAttribute'
   @mappings[:datetime]    = 'ArDocStore::AttributeTypes::DatetimeAttribute'
+  @mappings[:encrypted_string]    = 'ArDocStore::AttributeTypes::EncryptedStringAttribute'
 
   def self.mappings
     @mappings
