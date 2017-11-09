@@ -31,7 +31,7 @@ module ArDocStore
   @mappings[:string]      = 'ArDocStore::AttributeTypes::StringAttribute'
   @mappings[:uuid]        = 'ArDocStore::AttributeTypes::UuidAttribute'
   @mappings[:datetime]    = 'ArDocStore::AttributeTypes::DatetimeAttribute'
-  @mappings[:date]        = 'ArDocStore::AttributeTypes::Date'
+  @mappings[:date]        = 'ArDocStore::AttributeTypes::DateAttribute'
   @mappings[:encrypted_string]    = 'ArDocStore::AttributeTypes::EncryptedStringAttribute'
 
   def self.mappings
