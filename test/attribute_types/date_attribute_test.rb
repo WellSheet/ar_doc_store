@@ -16,12 +16,6 @@ class DateAttributeTest < MiniTest::Test
     assert po.approved_date_changed?
   end
 
-  def test_question_mark_method
-    approved_date = Date.new(1984, 3, 6)
-    po = PurchaseOrder.new approved_date: approved_date
-    assert_equal true, po.approved_date?
-  end
-
   def test_conversion
     approved_date = Date.new(1984, 3, 6)
     po = PurchaseOrder.new approved_date: approved_date.to_s
