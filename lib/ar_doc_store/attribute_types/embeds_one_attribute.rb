@@ -28,6 +28,7 @@ module ArDocStore
             value = value.attributes
           end
           value = #{class_name}.build value
+          value.parent = self
           @#{attribute} = value
           write_store_attribute json_column, :#{attribute}, value
         end
