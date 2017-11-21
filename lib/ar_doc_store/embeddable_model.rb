@@ -49,6 +49,7 @@ module ArDocStore
 
       def initialize_attributes(attrs)
         @attributes ||= HashWithIndifferentAccess.new
+        self.id
         self.parent = attributes.delete(:parent) if attributes
         self.attributes = attrs
       end
