@@ -16,7 +16,7 @@ class EmbeddingTest < MiniTest::Test
     assert_equal %w{knob}, restroom.door.open_handle
   end
 
-  def test_ensure_change_events_are_propagated_to_root_has_many_has_one
+  def test_ensure_change_events_are_propagated_to_root
     building = Building.new
     restroom = Restroom.new
     restroom.door = Door.new
