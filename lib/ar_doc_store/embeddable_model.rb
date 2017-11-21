@@ -49,6 +49,7 @@ module ArDocStore
 
       def initialize_attributes(attrs)
         @attributes ||= HashWithIndifferentAccess.new
+        self.id
         self.parent = attributes.delete(:parent) if attributes
         self.attributes = attrs
       end
@@ -83,11 +84,22 @@ module ArDocStore
           old_value = attributes[attribute]
           if attribute.to_s != 'id' && value != old_value
             public_send :"#{attribute}_will_change!"
-            parent.data_will_change! if parent
+            root = find_root(parent)
+            root.data_will_change! if root
           end
 
         end
         attributes[attribute] = value
+      end
+
+      def find_root(node)
+        if node.nil?
+          nil
+        elsif node.respond_to?(:parent)
+          find_root(node.parent)
+        else
+          node
+        end
       end
 
       def write_default_store_attribute(attr, value)

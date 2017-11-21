@@ -1,13 +1,13 @@
 require_relative './../test_helper'
 
 class EmbeddingTest < MiniTest::Test
-  
+
   def test_can_build_embedded_model
     restroom = Restroom.new
     door = restroom.build_door
     assert door.is_a?(Door)
   end
-  
+
   def test_ensure_door_returns_existing_door
     restroom = Restroom.new
     restroom.build_door
@@ -15,21 +15,34 @@ class EmbeddingTest < MiniTest::Test
     restroom.ensure_door
     assert_equal %w{knob}, restroom.door.open_handle
   end
-  
+
+  def test_ensure_change_events_are_propagated_to_root
+    building = Building.new
+    restroom = Restroom.new
+    restroom.door = Door.new
+    building.restrooms = [restroom]
+
+    building.clear_attribute_changes([:data])
+    assert building.changes[:data].nil?
+
+    building.restrooms.first.door.clear_space = 1
+    assert !building.changes[:data].nil?
+  end
+
   def test_attributes_equals_sets_attributes
     restroom = Restroom.new door_attributes: { clear_distance: 5, opening_force: 13, clear_space: 43 }
     assert_equal 5, restroom.door.clear_distance
     restroom.door_attributes = { _destroy: '1' }
     assert_nil restroom.door.clear_distance
   end
-  
+
   def test_attributes_equals_sets_partial_attributes
     restroom = Restroom.new door_attributes: { clear_distance: 5, opening_force: 13, clear_space: 43 }
     restroom.door_attributes = { clear_distance: 7 }
     assert_equal 7, restroom.door.clear_distance
     assert_equal 13, restroom.door.opening_force
   end
-  
+
   def test_embeds_many_attributes_equals_sets_partial_attributes
     building = Building.new
     building.restrooms << Restroom.new(door_attributes: { clear_distance: 5, opening_force: 13, clear_space: 43 })
@@ -47,7 +60,7 @@ class EmbeddingTest < MiniTest::Test
     assert_equal 1, building.restrooms.last.door.clear_distance
     assert_nil building.restrooms.detect {|restroom| restroom.id == restrooms_attributes[:a2][:id] }
   end
-  
+
   def test_attributes_method_embeds_many_does_not_clobber_existing_embeds_that_are_not_in_array
     building = Building.new
     building.restrooms << Restroom.new(door_attributes: { clear_distance: 5, opening_force: 13, clear_space: 43 })
@@ -61,7 +74,7 @@ class EmbeddingTest < MiniTest::Test
     assert_equal 10, building.restrooms.first.door.clear_distance
     assert_equal 15, building.restrooms.last.door.opening_force
   end
-  
+
   def test_attribute_validity_of_embedded_model_from_model
     b = Building.new
     r = Restroom.new
