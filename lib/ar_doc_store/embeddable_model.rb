@@ -83,7 +83,6 @@ module ArDocStore
         if @_initialized
           old_value = attributes[attribute]
           if attribute.to_s != 'id' && value != old_value
-            public_send :"#{attribute}_will_change!"
             root = find_root(parent)
             root.data_will_change! if root
           end
